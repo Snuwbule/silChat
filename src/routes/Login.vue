@@ -4,7 +4,7 @@
         <div class="border rounded-xl flex justify-center bg-opacity-40 bg-black">
             <div class="m-4 grid gap-4 grid-rows-4">
                 <h1 class="text-white text-center text-xl">Bot Login</h1>
-                <input class="rounded-xl" id="token" type="password" placeholder="Bot Token" />
+                <input class="rounded-xl" id="token" type="password" placeholder="Discord Bot Token" />
                 <input class="rounded-xl" id="channelID" type="text" placeholder="Channel ID" />
                 <button @click="loginSend" class="text-white border rounded-xl">Login</button>
             </div>

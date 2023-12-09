@@ -27,7 +27,7 @@ module.exports = {
           owner: 'Snuwbule',
           name: 'silChat'
         },
-        prerelease: true
+        prerelease: true,
       }
     }
   ],

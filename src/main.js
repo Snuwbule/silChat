@@ -7,11 +7,13 @@ if (require('electron-squirrel-startup')) {
   app.quit();
 }
 
-const bot = new Client({intents:[
-  GatewayIntentBits.Guilds,
-  GatewayIntentBits.MessageContent,
-  GatewayIntentBits.GuildMessages
-]});
+const bot = new Client({
+  intents: [
+    GatewayIntentBits.Guilds,
+    GatewayIntentBits.MessageContent,
+    GatewayIntentBits.GuildMessages
+  ]
+});
 
 let mainWindow;
 
@@ -32,10 +34,12 @@ const createWindow = () => {
   } else {
     mainWindow.loadFile(path.join(__dirname, `../renderer/${MAIN_WINDOW_VITE_NAME}/index.html`));
   }
-  
+
   //disalbe menu
   mainWindow.setMenu(null);
-  
+  mainWindow.setMenuBarVisibility(false);
+  mainWindow.setAlwaysOnTop(true);
+
   // Open the DevTools.
   //mainWindow.webContents.openDevTools();
 
@@ -44,11 +48,11 @@ const createWindow = () => {
 // datas
 let chanID = "";
 
-function login(_event, token, channelId){
+function login(_event, token, channelId) {
   chanID = channelId;
   bot.login(token).then(() => {
     mainWindow.webContents.send('discord:login:result', 0,
-     bot.channels.cache.get(chanID), bot.user.username);
+      bot.channels.cache.get(chanID), bot.user.username);
   }).catch(error => {
     mainWindow.webContents.send('discord:login:result', -1);
   });
@@ -64,8 +68,8 @@ app.on('window-all-closed', () => {
 app.whenReady().then(() => {
 
   ipcMain.on('discord:login', login);
-  ipcMain.on('discord:client:send', (message) => {
-    bot.channels,caches.get(chanID).send(message);
+  ipcMain.on('discord:client:send', (_event, message) => {
+    bot.channels.cache.get(chanID).send(message);
   });
 
   createWindow();
@@ -78,6 +82,20 @@ app.whenReady().then(() => {
 
 //bot logic
 bot.on('messageCreate', (msg) => {
-  if (msg.channelId != chanID) { return; } 
-  mainWindow.webContents.send('discord:message:created', msg, msg.author.displayAvatarURL({size: 128, dynamic: true}));
+  if (msg.channelId != chanID) { return; }
+  if (msg.attachments.size <= 0) {
+    mainWindow.webContents.send('discord:message:created', msg.author.username, msg.content,
+      msg.author.displayAvatarURL({ size: 128, dynamic: true }), null);
+  } else {
+    if (msg.content != "") {
+      mainWindow.webContents.send('discord:message:created', msg.author.username, msg.content,
+        msg.author.displayAvatarURL({ size: 128, dynamic: true }), null);
+    }
+    msg.attachments.forEach((attach) => {
+      console.log(attach.url)
+      mainWindow.webContents.send('discord:message:created', msg.author.username, "",
+        msg.author.displayAvatarURL({ size: 128, dynamic: true }), attach.url);
+    });
+  }
+
 });

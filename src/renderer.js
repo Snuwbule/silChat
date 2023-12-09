@@ -7,15 +7,15 @@ import Login from './routes/Login.vue';
 import Chat from './routes/Chat.vue'
 
 const routes = [
-    { path: '/', component: Login },
-    { path: '/login', component: Login },
-    { path: '/chat', component: Chat }
+  { path: '/', component: Login },
+  { path: '/login', component: Login },
+  { path: '/chat', component: Chat }
 ]
 
 const router = createRouter({
-    history: createWebHashHistory(),
-    routes,
-  })
+  history: createWebHashHistory(),
+  routes,
+})
 
 
 createApp(App).use(router).mount('#app');

@@ -1,5 +1,5 @@
 <script setup>
-    defineProps(['pfpImg','Time','roleColor','Name','message']);
+    defineProps(['pfpImg','Time','roleColor','Name','message', 'image']);
 </script>
 
 <template>
@@ -14,6 +14,7 @@
             <div>
                 <p class="font-semibold text-white mx-2" style="color: {{ roleColor }};">{{ Name }}</p>
                 <p class="text-white mx-2">{{ message }}</p>
+                <img class="rounded-lg m-2" :src="image">
             </div>
         </div>
     </div>

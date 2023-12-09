@@ -1,8 +1,8 @@
 {
-  "name": "my-vue-app",
-  "productName": "my-vue-app",
+  "name": "silchat",
+  "productName": "SilChat",
   "version": "1.0.0",
-  "description": "My Electron application description",
+  "description": "Silly chat app",
   "main": ".vite/build/main.js",
   "scripts": {
     "start": "electron-forge start",
@@ -34,6 +34,7 @@
   "dependencies": {
     "discord.js": "^14.14.1",
     "electron-squirrel-startup": "^1.0.0",
+    "update-electron-app": "^3.0.0",
     "vue": "^3.3.10",
     "vue-router": "^4.2.5"
   }

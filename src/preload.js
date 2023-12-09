@@ -5,8 +5,9 @@ contextBridge.exposeInMainWorld('electronAPI', {
   loginUpdate: (callback) => ipcRenderer.on('discord:login:result', (_event, result, chanID, name) => {
     callback(result, chanID, name);
   }),
-  onMessage: (callback) => ipcRenderer.on('discord:message:created', (_event, message, pfp) =>{
-    callback(message, pfp);
+  onMessage: (callback) => ipcRenderer.on('discord:message:created',
+   (_event, name, msg, pfp, imageLink) =>{
+    callback(name, msg, pfp, imageLink);
   }),
   sendMessage: (message) => ipcRenderer.send('discord:client:send', message)
 })
